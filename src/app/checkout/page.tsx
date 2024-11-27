@@ -1,13 +1,18 @@
 import CheckoutClient from "./CheckoutClient";
 
-export default function CheckoutPage({ searchParams }: { searchParams: { client_secret?: string } }) {
-  const clientSecret = searchParams.client_secret;
-
-  if (!clientSecret) {
-    return <div>Error: No client secret found in URL.</div>;
+export default async function CheckoutPage({
+    searchParams,
+  }: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  }) {
+    const resolvedSearchParams = await searchParams;
+  
+    const clientSecret = resolvedSearchParams.client_secret;
+  
+    if (!clientSecret || Array.isArray(clientSecret)) {
+      return <div>Error: No client secret found in the URL.</div>;
+    }
+  
+    return <CheckoutClient clientSecret={clientSecret} />;
   }
-
-  return (
-    <CheckoutClient clientSecret={clientSecret} />
-  );
-}
+  
