@@ -1,10 +1,8 @@
+// src/components/Pricing.tsx
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation"; // Import useRouter
 import { ArrowRight } from "lucide-react";
-import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
 
 interface Plan {
   title: string;
@@ -17,11 +15,8 @@ interface Plan {
   features: string[];
 }
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "");
-
 export default function Pricing() {
-  const router = useRouter(); // Initialize router
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const plans: Plan[] = [
     {
@@ -31,7 +26,7 @@ export default function Pricing() {
       billing: "Billed Monthly",
       background: "bg-white",
       buttonStyle: "bg-[#E4D5F7] text-black",
-      productId: "prod_RI6V6MTbIWRCoD", // Starter Package ID
+      productId: "prod_RI6V6MTbIWRCoD", // Starter Package Product ID
       features: [
         "3,500 cold outreach messages",
         "AI-Powered follow-up sequences",
@@ -46,7 +41,7 @@ export default function Pricing() {
       billing: "Billed Monthly",
       background: "bg-[#E4D5F7]",
       buttonStyle: "bg-white text-black",
-      productId: "prod_RI6W7WxJ2mDI0b", // Growth Package ID
+      productId: "prod_RI6W7WxJ2mDI0b", // Growth Package Product ID
       features: [
         "7,000 cold outreach messages",
         "Multi-platform engagement",
@@ -61,7 +56,7 @@ export default function Pricing() {
       billing: "Billed Monthly",
       background: "bg-white",
       buttonStyle: "bg-[#E4D5F7] text-black",
-      productId: "prod_RI6WYHQqXrHnhZ", // Elite Package ID
+      productId: "prod_RI6WYHQqXrHnhZ", // Elite Package Product ID
       features: [
         "15,000 cold outreach messages",
         "Multi-platform outreach",
@@ -73,46 +68,33 @@ export default function Pricing() {
   ];
 
   const handleCheckout = async (productId: string) => {
+    setIsLoading(true);
     try {
-      const res = await fetch("/api/stripe/checkout-session", {
+      const response = await fetch("/api/checkout_sessions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ productId }),
+        body: JSON.stringify({ productId }), // Send productId instead of priceId
       });
 
-      if (!res.ok) {
-        console.error("Error creating session:", await res.text());
-        return;
-      }
+      const data = await response.json();
 
-      const { clientSecret } = await res.json();
-      if (!clientSecret) {
-        console.error("Error: Client secret not returned");
-        return;
-      }
-
-      // Redirect the user to the embedded Checkout
-      router.push(`/checkout?client_secret=${clientSecret}`);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.error("Error creating session:", error.message);
+      if (response.ok && data.url) {
+        // Redirect to Stripe Checkout
+        window.location.href = data.url;
+      } else if (data.error) {
+        alert(data.error);
       } else {
-        console.error("Unexpected error:", error);
+        throw new Error("Unexpected response from the server.");
       }
+    } catch (error: any) {
+      console.error("Error:", error);
+      alert(error.message || "An unexpected error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
-
-  if (clientSecret) {
-    return (
-      <EmbeddedCheckoutProvider stripe={stripePromise} options={{ clientSecret }}>
-        <div id="checkout" className="w-full h-screen">
-          <EmbeddedCheckout />
-        </div>
-      </EmbeddedCheckoutProvider>
-    );
-  }
 
   return (
     <section id="pricing" className="w-full py-24 px-4 md:px-16 bg-white">
@@ -124,7 +106,7 @@ export default function Pricing() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan, index) => (
             <div
-              key={index}
+              key={plan.productId}
               className={`${plan.background} rounded-3xl p-8 flex flex-col relative 
                 border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300
                 ${index === 1 ? "md:scale-105" : ""}`}
@@ -170,7 +152,9 @@ export default function Pricing() {
                         />
                       </svg>
                     </div>
-                    <span className="text-[#28282B] font-light">{feature}</span>
+                    <span className="text-[#28282B] font-light">
+                      {feature}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -179,8 +163,9 @@ export default function Pricing() {
                 <button
                   onClick={() => handleCheckout(plan.productId)}
                   className={`flex items-center justify-center gap-2 px-6 py-3.5 ${plan.buttonStyle} rounded-full flex-grow transition-all hover:opacity-90 font-medium`}
+                  disabled={isLoading}
                 >
-                  <span>Get Started</span>
+                  <span>{isLoading ? "Processing..." : "Get Started"}</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
