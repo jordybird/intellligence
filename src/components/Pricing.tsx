@@ -4,6 +4,7 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 
+// Define the Plan interface
 interface Plan {
   title: string;
   price: string;
@@ -11,13 +12,14 @@ interface Plan {
   billing: string;
   background: string;
   buttonStyle: string;
-  productId: string;
+  paymentLink: string;
   features: string[];
 }
 
 export default function Pricing() {
   const [isLoading, setIsLoading] = useState(false);
 
+  // Define the plans with the Plan interface
   const plans: Plan[] = [
     {
       title: "Starter Package",
@@ -26,7 +28,7 @@ export default function Pricing() {
       billing: "Billed Monthly",
       background: "bg-white",
       buttonStyle: "bg-[#E4D5F7] text-black",
-      productId: "prod_RI6V6MTbIWRCoD", // Starter Package Product ID
+      paymentLink: "https://buy.stripe.com/9AQ2aU7bt2LUbyo4gg", // Test Payment Link
       features: [
         "3,500 cold outreach messages",
         "AI-Powered follow-up sequences",
@@ -41,7 +43,7 @@ export default function Pricing() {
       billing: "Billed Monthly",
       background: "bg-[#E4D5F7]",
       buttonStyle: "bg-white text-black",
-      productId: "prod_RI6W7WxJ2mDI0b", // Growth Package Product ID
+      paymentLink: "https://buy.stripe.com/eVa5n653l72a6e43cd", // Growth Package Payment Link
       features: [
         "7,000 cold outreach messages",
         "Multi-platform engagement",
@@ -56,7 +58,7 @@ export default function Pricing() {
       billing: "Billed Monthly",
       background: "bg-white",
       buttonStyle: "bg-[#E4D5F7] text-black",
-      productId: "prod_RI6WYHQqXrHnhZ", // Elite Package Product ID
+      paymentLink: "https://buy.stripe.com/5kAeXG2Vd3PY9qgcMO", // Elite Package Payment Link
       features: [
         "15,000 cold outreach messages",
         "Multi-platform outreach",
@@ -67,33 +69,11 @@ export default function Pricing() {
     },
   ];
 
-  const handleCheckout = async (productId: string) => {
+  // Handle checkout with typed paymentLink
+  const handleCheckout = (paymentLink: string) => {
     setIsLoading(true);
-    try {
-      const response = await fetch("/api/checkout_sessions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ productId }), // Send productId instead of priceId
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.url) {
-        // Redirect to Stripe Checkout
-        window.location.href = data.url;
-      } else if (data.error) {
-        alert(data.error);
-      } else {
-        throw new Error("Unexpected response from the server.");
-      }
-    } catch (error: any) {
-      console.error("Error:", error);
-      alert(error.message || "An unexpected error occurred. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
+    // Redirect to the Stripe Payment Link
+    window.location.href = paymentLink;
   };
 
   return (
@@ -106,7 +86,7 @@ export default function Pricing() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {plans.map((plan, index) => (
             <div
-              key={plan.productId}
+              key={plan.title}
               className={`${plan.background} rounded-3xl p-8 flex flex-col relative 
                 border border-gray-100 shadow-lg hover:shadow-xl transition-all duration-300
                 ${index === 1 ? "md:scale-105" : ""}`}
@@ -161,7 +141,7 @@ export default function Pricing() {
 
               <div className="flex items-center gap-2">
                 <button
-                  onClick={() => handleCheckout(plan.productId)}
+                  onClick={() => handleCheckout(plan.paymentLink)}
                   className={`flex items-center justify-center gap-2 px-6 py-3.5 ${plan.buttonStyle} rounded-full flex-grow transition-all hover:opacity-90 font-medium`}
                   disabled={isLoading}
                 >
