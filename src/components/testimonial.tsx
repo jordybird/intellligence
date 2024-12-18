@@ -1,111 +1,86 @@
 "use client";
 
-import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
 
-export default function TestimonialSection() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+const TestimonialSection = () => {
   const testimonials = [
     {
-      text: "The platform has streamlined our entire property management workflow. The automated features have saved us countless hours on routine tasks.",
-      author: "Sarah Chen",
+      name: "Mr Sparky Atlanta",
       role: "Property Manager",
-      type: "STORIES"
+      image: "/MrSparky.png",
+      quote: "Intellireach has helped us with social media outreach tremendously, The automated replies to customers helps us spend time on more important matters, allowing us to increase in both engagement and qualified leads since partnering with them."
     },
     {
-      text: "The intuitive interface and comprehensive reporting tools have made it incredibly easy to keep track of all our properties and financial data in one place.",
-      author: "Marcus Thompson",
+      name: "The Clack Academy",
       role: "Real Estate Investor",
-      type: "STORIES"
-    },
-    {
-      text: "Outstanding customer support and regular updates. The team is always responsive and the platform keeps getting better with each release.",
-      author: "Rachel Martinez",
-      role: "Property Owner",
-      type: "STORIES"
-    },
-    {
-      text: "The maintenance request tracking system has greatly improved our response times and tenant satisfaction. A game-changer for our operations.",
-      author: "David Wilson",
-      role: "Facilities Director",
-      type: "STORIES"
+      image: "/adam.png",
+      quote: "TIntelliReach helped the Adam Clack Academy grow our social media quickly and connect with the right audience. Their AI-driven outreach boosted engagement and follower growth, making a huge impact. Highly recommend!"
     }
   ];
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-  };
-
   return (
-    <div className="hidden md:block w-full px-4 md:px-16 py-16 bg-white">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-20">
-          <h2 className="text-5xl font-normal text-[#28282B] text-center mb-8">
+    <section className="w-full py-24 bg-gradient-to-b from-white to-white">
+      <div className="max-w-6xl mx-auto px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-20"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-[#28282B]">
             What Our Clients Say
           </h2>
-          <div className="flex justify-end gap-2">
-            <button 
-              onClick={prevSlide}
-              className="w-16 h-16 rounded-full bg-[#E4D5F7] flex items-center justify-center hover:bg-[#CBB3FF] transition-colors"
-              aria-label="Previous testimonial"
-            >
-              <ChevronLeft className="w-8 h-8 text-black" />
-            </button>
-            <button 
-              onClick={nextSlide}
-              className="w-16 h-16 rounded-full bg-[#E4D5F7] flex items-center justify-center hover:bg-[#CBB3FF] transition-colors"
-              aria-label="Next testimonial"
-            >
-              <ChevronRight className="w-8 h-8 text-black" />
-            </button>
-          </div>
-        </div>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {testimonials.slice(currentIndex, currentIndex + 2).map((testimonial, index) => (
-            <div 
-              key={index} 
-              className="bg-gray-50 rounded-3xl p-8 relative"
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {testimonials.map((testimonial, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.2 }}
+              className="relative"
             >
-              <span className="text-sm text-gray-500 mb-4 block">
-                {testimonial.type}
-              </span>
-              <p className="text-lg text-[#28282B] mb-12">
-                {testimonial.text}
-              </p>
-              <div className="flex items-center gap-4 mt-4">
-                <div className="w-12 h-12 rounded-full bg-gray-200 overflow-hidden">
-                  <img 
-                    src={`/api/placeholder/${48}/${48}`} 
-                    alt={testimonial.author} 
-                    className="w-full h-full object-cover"
-                  />
+              <div className="bg-white rounded-2xl p-8 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+                <div className="absolute -top-6 left-8">
+                  <div className="w-28 h-28 rounded-2xl overflow-hidden   relative">
+                    <Image
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                      sizes="(max-width: 768px) 128px, 128px"
+                      quality={100}
+                      priority
+                      className="object-cover object-center hover:scale-105 transition-transform duration-300"
+                      style={{ 
+                        imageRendering: 'crisp-edges',
+                      }}
+                    />
+                  </div>
                 </div>
-                <div>
-                  <h3 className="font-medium text-[#28282B]">
-                    {testimonial.author}
-                  </h3>
-                  <p className="text-sm text-gray-500">
-                    {testimonial.role}
+                
+                <div className="mt-20 ml-4">
+                  <div className="mb-6">
+                    <h4 className="text-xl font-semibold text-[#28282B]">
+                      {testimonial.name}
+                    </h4>
+                   
+                  </div>
+                  
+                  <p className="text-gray-600 text-lg leading-relaxed">
+                    "{testimonial.quote}"
                   </p>
                 </div>
-                <span className="text-6xl text-[#28282B] absolute bottom-8 right-8">
-                  "
-                </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
-}
+};
+
+export default TestimonialSection;
