@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Brain, Share2, LucideIcon } from 'lucide-react';
 import Image from 'next/image';
@@ -34,7 +34,7 @@ const tabs: Tab[] = [
       ],
       buttonText: 'Try AI Outreach Tools',
       graph: (
-        <div className="h-full w-full bg-gray-50 rounded-lg overflow-hidden">
+        <div className="h-full w-full rounded-lg overflow-hidden">
           <Image 
             src="/lead.png"
             alt="AI Outreach Analytics"
@@ -60,7 +60,7 @@ const tabs: Tab[] = [
       ],
       buttonText: 'Start Generating Leads',
       graph: (
-        <div className="h-full w-full bg-gray-50 rounded-lg overflow-hidden">
+        <div className="h-full w-full rounded-lg overflow-hidden">
           <Image 
             src="/lead.png"
             alt="Lead Generation Dashboard"
@@ -86,7 +86,7 @@ const tabs: Tab[] = [
       ],
       buttonText: 'Explore Social Tools',
       graph: (
-        <div className="h-full w-full bg-gray-50 rounded-lg overflow-hidden">
+        <div className="h-full w-full rounded-lg overflow-hidden">
           <Image 
             src="/chartsm.png"
             alt="Social Media Analytics Dashboard"
@@ -100,48 +100,62 @@ const tabs: Tab[] = [
   }
 ];
 
-const TabContent: React.FC<{ content: TabContent }> = ({ content }) => (
+const TabContentComponent: React.FC<{ content: TabContent }> = ({ content }) => (
   <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    exit={{ opacity: 0 }}
-    transition={{ duration: 0.2 }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
     className="w-full"
   >
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-      {/* Content Section */}
-      <div className="flex flex-col space-y-6">
-        <h2 className="text-2xl font-semibold text-center md:text-left text-[#28282B]">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div className="flex flex-col space-y-8">
+        <h2 className="text-3xl font-bold text-center md:text-left text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
           {content.title}
         </h2>
         
-        <ul className="space-y-4">
+        <ul className="space-y-6">
           {content.features.map((feature, index) => (
-            <li key={index} className="flex items-center gap-3">
-              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-[#9644e3]" />
-              <span className="text-[#28282B] text-base">{feature}</span>
-            </li>
+            <motion.li 
+              key={index}
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="flex items-center gap-4"
+            >
+              <div className="flex-shrink-0 w-2 h-2 rounded-full bg-gradient-to-r from-purple-400 to-pink-600" />
+              <span className="text-white/90 text-lg">{feature}</span>
+            </motion.li>
           ))}
         </ul>
         
-        {/* Desktop button */}
         <div className="hidden md:flex justify-start">
-          <button className="bg-[#9644e3] text-white px-6 py-3 rounded-lg hover:bg-[#8034d1] transition-colors text-base font-semibold">
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow"
+          >
             {content.buttonText}
-          </button>
+          </motion.button>
         </div>
       </div>
 
-      {/* Graph Section with Mobile Button */}
-      <div className="flex flex-col space-y-6">
-        <div className="h-64 md:h-80">
+      <div className="flex flex-col space-y-8">
+        <motion.div 
+          className="h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20"
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
+        >
           {content.graph}
-        </div>
-        {/* Mobile button */}
+        </motion.div>
         <div className="flex md:hidden justify-center">
-          <button className="bg-[#9644e3] text-white px-6 py-3 rounded-lg hover:bg-[#8034d1] transition-colors text-base font-semibold">
+          <motion.button 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow"
+          >
             {content.buttonText}
-          </button>
+          </motion.button>
         </div>
       </div>
     </div>
@@ -150,74 +164,79 @@ const TabContent: React.FC<{ content: TabContent }> = ({ content }) => (
 
 const TabbedSection: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>(tabs[0].id);
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  const scrollToTab = (tabId: string) => {
-    const tabElement = document.getElementById(`tab-${tabId}`);
-    if (tabElement && scrollRef.current) {
-      const scrollLeft = tabElement.offsetLeft - (scrollRef.current.clientWidth / 2) + (tabElement.clientWidth / 2);
-      scrollRef.current.scrollTo({ left: scrollLeft, behavior: 'smooth' });
-    }
-  };
 
   return (
-    <section className="w-full bg-white py-12 md:py-20">
-      <div className="max-w-6xl mx-auto px-4">
-        <h1 className="text-4xl md:text-5xl font-semibold text-[#28282B] text-center mb-12">
+    <section className="w-full bg-[#0A0A0A] py-24 md:py-32">
+      <div className="max-w-7xl mx-auto px-2">
+        <motion.h1 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-5xl md:text-6xl font-bold text-white text-center mb-16 bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
+        >
           Solutions We Provide
-        </h1>
+        </motion.h1>
 
-        <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-          <div className="max-w-4xl mx-auto py-8 px-4 md:px-8">
-            {/* Tab Bar */}
-            <div 
-              ref={scrollRef}
-              className="overflow-x-auto scrollbar-hide mb-12"
-            >
-              <div className="flex justify-center gap-8 min-w-max md:min-w-0">
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
+          style={{
+            boxShadow: '0 25px 50px -12px rgba(150, 68, 227, 0.15)',
+            backdropFilter: 'blur(20px)'
+          }}
+        >
+          <div className="max-w-6xl mx-auto py-12 md:py-16 px-2 md:px-4">
+            <div className="flex justify-center mb-16">
+              <div className="flex gap-12">
                 {tabs.map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
                   return (
-                    <button
-                      id={`tab-${tab.id}`}
+                    <motion.button
                       key={tab.id}
                       onClick={() => setActiveTab(tab.id)}
-                      className="flex flex-col items-center gap-2 relative px-4"
+                      className="flex flex-col items-center gap-3 relative px-4"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
                     >
                       <Icon 
-                        size={24} 
-                        className={isActive ? 'text-[#9644e3]' : 'text-gray-400'} 
+                        size={28} 
+                        className={`transition-colors duration-300 ${
+                          isActive ? 'text-purple-400' : 'text-gray-400'
+                        }`} 
                       />
                       <span 
-                        className={`text-base whitespace-nowrap ${
-                          isActive ? 'text-[#9644e3] font-medium' : 'text-[#28282B]'
+                        className={`text-lg whitespace-nowrap transition-colors duration-300 ${
+                          isActive ? 'text-purple-400 font-semibold' : 'text-white/70'
                         }`}
                       >
                         {tab.label}
                       </span>
-                      <div 
-                        className={`absolute bottom-0 left-0 right-0 h-0.5 transition-colors ${
-                          isActive ? 'bg-[#9644e3]' : 'bg-transparent'
-                        }`} 
+                      <motion.div 
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-600"
+                        initial={false}
+                        animate={{ 
+                          opacity: isActive ? 1 : 0,
+                          scale: isActive ? 1 : 0.9
+                        }}
+                        transition={{ duration: 0.2 }}
                       />
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
             </div>
 
-            {/* Tab Content */}
             <div className="relative">
               <AnimatePresence mode="wait">
-                <TabContent
+                <TabContentComponent
                   key={activeTab}
                   content={tabs.find(tab => tab.id === activeTab)!.content}
                 />
               </AnimatePresence>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

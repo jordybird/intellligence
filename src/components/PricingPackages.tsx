@@ -23,7 +23,7 @@ const PRICING_TIERS: PricingTier[] = [
       "Email support",
       "Basic analytics"
     ],
-    stripeLink: "https://buy.stripe.com/7sIcPy7btaemgSIeUX" // Replace with actual Stripe link
+    stripeLink: "https://buy.stripe.com/7sIcPy7btaemgSIeUX"
   },
   {
     name: "Business Growth",
@@ -37,7 +37,7 @@ const PRICING_TIERS: PricingTier[] = [
       "Advanced analytics",
       "Competitor analysis"
     ],
-    stripeLink: "https://buy.stripe.com/eVa5n653l72a6e43cd" // Replace with actual Stripe link
+    stripeLink: "https://buy.stripe.com/eVa5n653l72a6e43cd"
   },
   {
     name: "Enterprise Scale",
@@ -52,25 +52,25 @@ const PRICING_TIERS: PricingTier[] = [
       "Market analysis",
       "Custom integrations"
     ],
-    stripeLink: "https://buy.stripe.com/5kAeXG2Vd3PY9qgcMO" // Replace with actual Stripe link
+    stripeLink: "https://buy.stripe.com/5kAeXG2Vd3PY9qgcMO"
   }
 ];
 
 const PackageCard = ({ tier }: { tier: PricingTier }) => (
-  <div className="relative flex flex-col p-8 bg-white rounded-2xl shadow-lg border border-gray-200 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]">
-    <h3 className="text-2xl font-bold text-[#28282B] mb-2">{tier.name}</h3>
-    <p className="text-gray-600 mb-4">{tier.description}</p>
+  <div className="relative flex flex-col p-8 bg-[#0A0A0A] rounded-2xl border border-gray-800 transition-all duration-300 hover:border-[#8034d1]">
+    <h3 className="text-2xl font-semibold text-white mb-2">{tier.name}</h3>
+    <p className="text-gray-400 mb-4">{tier.description}</p>
     
     <div className="mb-6">
-      <span className="text-4xl font-bold text-[#510f74]">${tier.price}</span>
-      <span className="text-gray-600">/month</span>
+      <span className="text-4xl font-bold text-[#9644e3]">${tier.price}</span>
+      <span className="text-gray-400">/month</span>
     </div>
 
     <ul className="space-y-4 mb-8 flex-grow">
       {tier.features.map((feature, index) => (
         <li key={index} className="flex items-start gap-2">
           <Check className="w-5 h-5 text-[#9644e3] shrink-0 mt-1" />
-          <span className="text-gray-600">{feature}</span>
+          <span className="text-gray-400">{feature}</span>
         </li>
       ))}
     </ul>
@@ -88,13 +88,13 @@ const PackageCard = ({ tier }: { tier: PricingTier }) => (
 
 const PricingPackages = () => {
   return (
-    <section className="py-16 bg-white to-white">
+    <section className="py-16 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#28282B] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Choose Your Growth Plan
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             Select the perfect package for your business needs and accelerate your growth
           </p>
         </div>

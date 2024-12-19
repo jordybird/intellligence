@@ -16,12 +16,29 @@ const TestimonialSection = () => {
       name: "The Clack Academy",
       role: "Real Estate Investor",
       image: "/adam.png",
-      quote: "TIntelliReach helped the Adam Clack Academy grow our social media quickly and connect with the right audience. Their AI-driven outreach boosted engagement and follower growth, making a huge impact. Highly recommend!"
+      quote: "Intellireach helped the Adam Clack Academy grow our social media quickly and connect with the right audience. Their AI-driven outreach boosted engagement and follower growth, making a huge impact. Highly recommend!"
     }
   ];
 
+  const titleStyle = {
+    background: "linear-gradient(to right, #9333EA, #EC4899, #9333EA)",
+    backgroundSize: "200% 100%",
+    animation: "wave 8s linear infinite",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    textFillColor: "transparent",
+  };
+
   return (
-    <section className="w-full py-24 bg-gradient-to-b from-white to-white">
+    <section className="w-full py-24 bg-[#0A0A0A]">
+      <style jsx global>{`
+        @keyframes wave {
+          0% { background-position: 200% center; }
+          100% { background-position: -200% center; }
+        }
+      `}</style>
+
       <div className="max-w-6xl mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -29,7 +46,7 @@ const TestimonialSection = () => {
           viewport={{ once: true }}
           className="text-center mb-20"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-[#28282B]">
+          <h2 className="text-4xl md:text-5xl font-bold text-white">
             What Our Clients Say
           </h2>
         </motion.div>
@@ -44,9 +61,9 @@ const TestimonialSection = () => {
               transition={{ duration: 0.5, delay: index * 0.2 }}
               className="relative"
             >
-              <div className="bg-white rounded-2xl p-8 shadow-lg transform hover:-translate-y-1 transition-all duration-300">
+              <div className="bg-[#1A1A1A] rounded-2xl p-8 shadow-lg transform hover:-translate-y-1 transition-all duration-300 border border-[#2A2A2A] hover:border-[#9644e3]">
                 <div className="absolute -top-6 left-8">
-                  <div className="w-28 h-28 rounded-2xl overflow-hidden   relative">
+                  <div className="w-28 h-28 rounded-2xl overflow-hidden relative ring-4 ring-[#9644e3] ring-opacity-50">
                     <Image
                       src={testimonial.image}
                       alt={testimonial.name}
@@ -64,13 +81,12 @@ const TestimonialSection = () => {
                 
                 <div className="mt-20 ml-4">
                   <div className="mb-6">
-                    <h4 className="text-xl font-semibold text-[#28282B]">
+                    <h4 className="text-xl font-semibold bg-gradient-to-r from-purple-400 to-pink-500 bg-clip-text text-transparent">
                       {testimonial.name}
                     </h4>
-                   
                   </div>
                   
-                  <p className="text-gray-600 text-lg leading-relaxed">
+                  <p className="text-gray-300 text-lg leading-relaxed">
                     "{testimonial.quote}"
                   </p>
                 </div>

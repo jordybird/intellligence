@@ -6,15 +6,17 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { useRouter, usePathname } from 'next/navigation';
 
+// Updated GridIcon with white fill
 const GridIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="7" height="7" rx="1" fill="#28282B" />
-    <rect x="14" y="3" width="7" height="7" rx="1" fill="#28282B" />
-    <rect x="3" y="14" width="7" height="7" rx="1" fill="#28282B" />
-    <rect x="14" y="14" width="7" height="7" rx="1" fill="#28282B" />
+    <rect x="3" y="3" width="7" height="7" rx="1" fill="white" />
+    <rect x="14" y="3" width="7" height="7" rx="1" fill="white" />
+    <rect x="3" y="14" width="7" height="7" rx="1" fill="white" />
+    <rect x="14" y="14" width="7" height="7" rx="1" fill="white" />
   </svg>
 );
 
+// MenuIcon remains unchanged as it already uses white stroke
 const MenuIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="4" y1="12" x2="20" y2="12"></line>
@@ -23,6 +25,7 @@ const MenuIcon = () => (
   </svg>
 );
 
+// CloseIcon remains unchanged as it already uses white stroke
 const CloseIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -30,6 +33,7 @@ const CloseIcon = () => (
   </svg>
 );
 
+// DiagonalArrow remains unchanged as it already uses white stroke
 const DiagonalArrow = () => (
   <svg 
     width="22" 
@@ -110,7 +114,7 @@ export default function Header() {
   };
 
   return (
-    <header className="relative bg-white font-poppins">
+    <header className="relative bg-[#0A0A0A] font-poppins">
       <div className="flex items-center justify-between px-4 md:px-8 py-5">
         {/* Logo Section */}
         <div className="flex items-center gap-2">
@@ -118,7 +122,8 @@ export default function Header() {
             <div className="hidden md:block">
               <GridIcon />
             </div>
-            <span className="font-bold text-2xl text-[#28282B]">Intellireach</span>
+            {/* Changed text color to white */}
+            <span className="font-bold text-2xl text-white">Intellireach</span>
           </Link>
         </div>
 
@@ -128,7 +133,8 @@ export default function Header() {
             <button
               key={link.id}
               onClick={() => scrollToSection(link.id)}
-              className="text-[#28282B] hover:underline text-lg font-light cursor-pointer"
+              /* Changed text color to white */
+              className="text-white hover:underline text-lg font-light cursor-pointer"
             >
               {link.label}
             </button>

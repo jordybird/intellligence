@@ -57,20 +57,41 @@ export default function Hero() {
     }
   };
 
+  const titleStyle = {
+    background: "linear-gradient(to right, #9333EA, #EC4899, #9333EA)",
+    backgroundSize: "200% 100%",
+    animation: "wave 8s linear infinite",
+    WebkitBackgroundClip: "text",
+    backgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    textFillColor: "transparent",
+  };
+
   return (
-    <div className="w-full px-4 py-8 md:py-16 bg-white">
+    <div className="w-full px-4 py-8 md:py-16 bg-[#0A0A0A]">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row gap-8 md:gap-4">
           {/* Left Column */}
           <div className="flex-1 md:w-[60%] relative">
             {/* Text Content */}
             <div className="space-y-4 text-center md:text-left">
-              <h1 className="text-3xl md:text-5xl font-semibold text-[#28282B] leading-tight">
-                <span className="whitespace-nowrap">AI MARKETING SOLUTIONS</span><br />
-                TO GROW YOUR BUSINESS
+              <h1 className="text-3xl md:text-5xl font-semibold leading-tight">
+                <span className="whitespace-nowrap block mb-2" style={titleStyle}>
+                  AI MARKETING SOLUTIONS
+                </span>
+                <span style={titleStyle}>
+                  TO GROW YOUR BUSINESS
+                </span>
               </h1>
               
-              <p className="text-lg md:text-xl pt-4 md:pt-8 text-[#28282B] pb-8 max-w-xl mx-auto md:mx-0 font-light">
+              <style jsx global>{`
+                @keyframes wave {
+                  0% { background-position: 200% center; }
+                  100% { background-position: -200% center; }
+                }
+              `}</style>
+              
+              <p className="text-lg md:text-xl pt-4 md:pt-8 text-white pb-8 max-w-xl mx-auto md:mx-0 font-light">
                 Social media management, lead generation, and personalized outreach crafted to connect with your ideal audience.
               </p>
 
@@ -104,8 +125,8 @@ export default function Hero() {
 
                 {/* Bottom Right Image - Hidden on Mobile */}
                 <div className="hidden md:block absolute top-0 mt-8 right-0 w-[230px] h-[220px] rounded-[2rem] overflow-hidden">
-                  <div className="absolute bottom-4 right-4 bg-white rounded-2xl p-3 shadow-lg">
-                    <p className="text-[#28282B] font-medium text-sm">
+                  <div className="absolute bottom-4 right-4 bg-[#0A0A0A] rounded-2xl p-3 shadow-lg">
+                    <p className="text-white font-medium text-sm">
                       Unlock the true potential with our app
                     </p>
                   </div>
@@ -121,7 +142,7 @@ export default function Hero() {
                 {/* Your Path Starts Here Link */}
                 <Link 
                   href="/get-started" 
-                  className="absolute w-full md:w-auto text-center md:text-left top-[210px] left-0 text-[#28282B] font-medium text-xl flex items-center justify-center md:justify-start gap-1"
+                  className="absolute w-full md:w-auto text-center md:text-left top-[210px] left-0 text-white font-medium text-xl flex items-center justify-center md:justify-start gap-1"
                   onMouseEnter={() => setIsPathHovered(true)}
                   onMouseLeave={() => setIsPathHovered(false)}
                 >

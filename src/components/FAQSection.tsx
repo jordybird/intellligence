@@ -33,26 +33,26 @@ interface FAQItemProps {
 
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) => {
   return (
-    <div className="border-b border-gray-200">
+    <div className="border-b border-gray-800">
       <button
-        className="w-full flex justify-between items-center py-4 px-6 focus:outline-none"
+        className="w-full flex justify-between items-center py-6 px-6 focus:outline-none group"
         onClick={onClick}
       >
-        <span className="text-left text-lg font-medium text-[#28282B] hover:text-[#510f74]">
+        <span className="text-left text-lg font-medium text-white group-hover:text-[#9644e3] transition-colors">
           {question}
         </span>
         <ChevronDown 
-          className={`w-5 h-5 text-[#510f74] transform transition-transform duration-200 ${
+          className={`w-5 h-5 text-[#9644e3] transform transition-all duration-300 ${
             isOpen ? 'rotate-180' : ''
           }`}
         />
       </button>
       <div
-        className={`overflow-hidden transition-all duration-200 ${
-          isOpen ? 'max-h-96 pb-4 px-6' : 'max-h-0'
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-[400px] pb-6 px-6' : 'max-h-0'
         }`}
       >
-        <p className="text-[#28282B]">{answer}</p>
+        <p className="text-gray-400 leading-relaxed">{answer}</p>
       </div>
     </div>
   );
@@ -66,16 +66,18 @@ const FAQSection: React.FC = () => {
   };
 
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-2">
+    <section className="py-16 bg-[#0A0A0A]">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-          {/* Increased column span for wider accordion */}
           <div className="w-full md:col-span-2">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#28282B] mb-8 ml-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
               Frequently Asked Questions
             </h2>
+            <p className="text-gray-400 mb-8">
+              Find answers to common questions about our services and packages
+            </p>
             
-            <div className="bg-white rounded-lg ">
+            <div className="bg-[#0F0F0F] rounded-2xl border border-gray-800">
               {FAQ_ITEMS.map((item, index) => (
                 <FAQItem
                   key={index}
@@ -88,9 +90,8 @@ const FAQSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Single column for narrower image */}
           <div className="hidden md:block md:col-span-1">
-            <div className="aspect-square w-full max-w-xs mx-auto rounded-lg overflow-hidden">
+            <div className="aspect-square w-full max-w-xs mx-auto rounded-2xl overflow-hidden border border-gray-800">
               <img 
                 src="/api/placeholder/600/600"
                 alt="FAQ illustration" 

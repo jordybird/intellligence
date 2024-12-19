@@ -36,7 +36,7 @@ const GetStarted: React.FC = () => {
 
   return (
     <div>
-    <main className="relative min-h-screen bg-white px-6 md:px-8 lg:px-12">
+    <main className="relative min-h-screen bg-[#0A0A0A] px-6 md:px-8 lg:px-12">
       <div className="max-w-[1400px] mx-auto">
         <PricingPackages />
 
