@@ -1,109 +1,171 @@
-import React from 'react';
-import { Check, Minus } from 'lucide-react';
+import React, { useState } from 'react';
+import { Check, Minus, ChevronDown, ChevronUp } from 'lucide-react';
 
-interface Feature {
+interface FeatureDetails {
   category: string;
   essential: string;
   business: string;
   enterprise: string;
 }
 
-type PlanType = 'essential' | 'business' | 'enterprise';
-
 interface PackageFeatures {
-  [key: string]: Feature;
+  [key: string]: FeatureDetails;
 }
 
 const PACKAGE_FEATURES: PackageFeatures = {
-  "Strategy": {
+  "Cold Outreach Messages": {
     category: "Core Services",
-    essential: "Basic digital strategy",
-    business: "Advanced strategy",
-    enterprise: "Custom strategy"
+    essential: "5,000 Cold Outreach Messages/Month",
+    business: "10,000 Cold Outreach Messages/Month",
+    enterprise: "15,000 Cold Outreach Messages/Month"
   },
-  "Website": {
+  "Lead Generation": {
     category: "Core Services",
-    essential: "Basic optimization",
-    business: "Advanced optimization",
-    enterprise: "Premium optimization"
+    essential: "Advanced Lead Generation",
+    business: "Advanced Lead Generation",
+    enterprise: "Exact Match Leads"
   },
-  "Content": {
+  "AI Video Content Creation": {
     category: "Marketing",
-    essential: "2 posts per month",
-    business: "4 posts per month",
-    enterprise: "8 posts per month"
+    essential: "2 Videos/Month",
+    business: "4 Videos/Month",
+    enterprise: "8 Videos/Month"
   },
-  "Social Media": {
+  "AI Social Media Posting": {
     category: "Marketing",
-    essential: "3 posts per week",
-    business: "5 posts per week",
-    enterprise: "Daily posts"
+    essential: "3 Posts/Week",
+    business: "5 Posts/Week",
+    enterprise: "Daily Posts"
   },
-  "Analytics": {
-    category: "Support",
-    essential: "Monthly reports",
-    business: "Weekly reports",
-    enterprise: "Real-time dashboard"
+  "Google Page Optimization": {
+    category: "Marketing",
+    essential: "Google Page Optimization",
+    business: "Google Page Optimization",
+    enterprise: "Google Page Optimization"
   },
-  "Support": {
+  "AI Analytics": {
     category: "Support",
-    essential: "Email support",
-    business: "Priority support",
-    enterprise: "24/7 support"
+    essential: "Monthly Reports",
+    business: "Weekly Reports",
+    enterprise: "Live Reports"
+  },
+  "Video Support": {
+    category: "Support",
+    essential: "24/7 Live Video Support",
+    business: "24/7 Live Video Support",
+    enterprise: "24/7 Live Video Support"
+  },
+  "Ads Management": {
+    category: "Advertising",
+    essential: "Social and Google Ads Management: Limited to $2,000 Ad Spend",
+    business: "Social and Google Ads Management: Limited to $5,000 Ad Spend",
+    enterprise: "Social and Google Ads Management: Custom Ad Budgets"
+  },
+  "Advanced Features": {
+    category: "Advertising",
+    essential: "",
+    business: "",
+    enterprise: "Includes Advanced Performance Tracking"
+  },
+  "Performance Guarantee": {
+    category: "Performance Guarantees",
+    essential: "Money-Back Guarantee if KPIs Are Not Met",
+    business: "Money-Back Guarantee if KPIs Are Not Met",
+    enterprise: "Money-Back Guarantee if KPIs Are Not Met"
   }
 };
 
-const ComparisonTable = () => {
-  const categories = [...new Set(Object.values(PACKAGE_FEATURES).map(feature => feature.category))];
-  
-  const getPriceByPlan = (plan: string): string => {
-    switch(plan) {
-      case 'Essential':
-        return '999';
-      case 'Business':
-        return '1,499';
-      case 'Enterprise':
-        return '2,499';
-      default:
-        return '';
-    }
-  };
+interface MobilePackageProps {
+  title: string;
+  price: string;
+  features: PackageFeatures;
+  tier: 'essential' | 'business' | 'enterprise';
+}
+
+const MobilePackage: React.FC<MobilePackageProps> = ({ title, price, features, tier }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const categories = [...new Set(Object.values(features).map(feature => feature.category))];
 
   return (
-    <section className="py-16 bg-[#0A0A0A]">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="text-center mb-12">
+    <div className="bg-[#0F0F0F] rounded-lg overflow-hidden mb-2">
+      {/* Package Header */}
+      <button 
+        className="w-full px-3 py-4 flex justify-between items-center text-left"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <div>
+          <h3 className="text-lg font-semibold text-white">{title}</h3>
+          <div className="mt-1">
+            <span className="text-2xl font-bold text-[#9644e3]">${price}</span>
+            <span className="text-gray-400">/mo</span>
+          </div>
+        </div>
+        {isOpen ? (
+          <ChevronUp className="text-[#9644e3]" />
+        ) : (
+          <ChevronDown className="text-[#9644e3]" />
+        )}
+      </button>
+
+      {/* Features Dropdown */}
+      {isOpen && (
+        <div className="px-3 pb-4">
+          {categories.map(category => (
+            <div key={category} className="mb-3">
+              <h4 className="text-[#9644e3] font-semibold mb-2">{category}</h4>
+              {Object.entries(features)
+                .filter(([_, feature]) => feature.category === category)
+                .map(([featureName, feature]) => (
+                  <div key={featureName} className="py-2 border-b border-gray-800 last:border-0">
+                    <div className="font-medium text-white mb-1">{featureName}</div>
+                    <div className="text-gray-400 text-sm">
+                      {feature[tier] || <Minus className="text-gray-400" size={16} />}
+                    </div>
+                  </div>
+                ))}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ComparisonTable: React.FC = () => {
+  const categories = [...new Set(Object.values(PACKAGE_FEATURES).map(feature => feature.category))];
+  
+  return (
+    <section className="py-8 md:py-16 bg-[#0A0A0A]">
+      <div className="max-w-7xl mx-auto px-2 md:px-4">
+        <div className="text-center mb-8 md:mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Compare Plans
+            Compare Our Packages
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Choose the plan that best fits your needs
+            Find the perfect package that aligns with your business goals
           </p>
         </div>
 
         {/* Mobile View */}
-        <div className="md:hidden space-y-8">
-          {(['essential', 'business', 'enterprise'] as const).map((plan) => (
-            <div key={plan} className="bg-[#0F0F0F] rounded-xl p-6 border border-gray-800">
-              <h3 className="text-xl font-semibold text-white mb-2">
-                {plan.charAt(0).toUpperCase() + plan.slice(1)}
-              </h3>
-              <div className="mb-6">
-                <span className="text-3xl font-bold text-[#9644e3]">
-                  ${getPriceByPlan(plan.charAt(0).toUpperCase() + plan.slice(1))}
-                </span>
-                <span className="text-gray-400">/mo</span>
-              </div>
-              <div className="space-y-4">
-                {Object.entries(PACKAGE_FEATURES).map(([featureName, feature]) => (
-                  <div key={featureName} className="flex justify-between items-center border-b border-gray-800 pb-2">
-                    <span className="text-gray-400">{featureName}</span>
-                    <span className="text-white">{feature[plan]}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
+        <div className="md:hidden space-y-2">
+          <MobilePackage
+            title="Essential Starter"
+            price="999"
+            features={PACKAGE_FEATURES}
+            tier="essential"
+          />
+          <MobilePackage
+            title="Business Growth"
+            price="1,499"
+            features={PACKAGE_FEATURES}
+            tier="business"
+          />
+          <MobilePackage
+            title="Enterprise Scale"
+            price="2,499"
+            features={PACKAGE_FEATURES}
+            tier="enterprise"
+          />
         </div>
 
         {/* Desktop View */}
@@ -112,19 +174,33 @@ const ComparisonTable = () => {
             <thead>
               <tr className="border-b border-gray-800">
                 <th className="p-4 text-left min-w-[200px]"></th>
-                {['Essential', 'Business', 'Enterprise'].map((plan) => (
-                  <th key={plan} className="p-4 text-left min-w-[250px]">
-                    <div className="mb-2">
-                      <h3 className="text-xl font-semibold text-white">{plan}</h3>
-                      <div className="mt-2">
-                        <span className="text-3xl font-bold text-[#9644e3]">
-                          ${getPriceByPlan(plan)}
-                        </span>
-                        <span className="text-gray-400">/mo</span>
-                      </div>
+                <th className="p-4 text-left min-w-[250px]">
+                  <div className="mb-2">
+                    <h3 className="text-xl font-semibold text-white">Essential Starter</h3>
+                    <div className="mt-2">
+                      <span className="text-3xl font-bold text-[#9644e3]">$999</span>
+                      <span className="text-gray-400">/mo</span>
                     </div>
-                  </th>
-                ))}
+                  </div>
+                </th>
+                <th className="p-4 text-left min-w-[250px]">
+                  <div className="mb-2">
+                    <h3 className="text-xl font-semibold text-white">Business Growth</h3>
+                    <div className="mt-2">
+                      <span className="text-3xl font-bold text-[#9644e3]">$1,499</span>
+                      <span className="text-gray-400">/mo</span>
+                    </div>
+                  </div>
+                </th>
+                <th className="p-4 text-left min-w-[250px]">
+                  <div className="mb-2">
+                    <h3 className="text-xl font-semibold text-white">Enterprise Scale</h3>
+                    <div className="mt-2">
+                      <span className="text-3xl font-bold text-[#9644e3]">$2,499</span>
+                      <span className="text-gray-400">/mo</span>
+                    </div>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -140,9 +216,15 @@ const ComparisonTable = () => {
                     .map(([featureName, feature]) => (
                       <tr key={featureName} className="border-b border-gray-800">
                         <td className="p-4 font-medium text-white">{featureName}</td>
-                        <td className="p-4 text-gray-400">{feature.essential}</td>
-                        <td className="p-4 text-gray-400">{feature.business}</td>
-                        <td className="p-4 text-gray-400">{feature.enterprise}</td>
+                        <td className="p-4 text-gray-400">
+                          {feature.essential || <Minus className="text-gray-400" size={16} />}
+                        </td>
+                        <td className="p-4 text-gray-400">
+                          {feature.business || <Minus className="text-gray-400" size={16} />}
+                        </td>
+                        <td className="p-4 text-gray-400">
+                          {feature.enterprise || <Minus className="text-gray-400" size={16} />}
+                        </td>
                       </tr>
                     ))}
                 </React.Fragment>

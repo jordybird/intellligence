@@ -25,10 +25,10 @@ export default function Pricing() {
       billing: "Billed Monthly",
       paymentLink: "https://buy.stripe.com/7sIcPy7btaemgSIeUX",
       features: [
-        "3,500 cold outreach messages",
-        "AI-Powered follow-up sequences",
-        "Basic Content Creation",
-        "Social Media Outreach",
+        "5,000 cold outreach messages",
+        "AI-Powered Content Creation",
+        "Google Page Optimization",
+        " 3 Social Media Posts/Week",
       ],
     },
     {
@@ -39,10 +39,11 @@ export default function Pricing() {
       tag: "Most Popular",
       paymentLink: "https://buy.stripe.com/eVa5n653l72a6e43cd",
       features: [
-        "7,000 cold outreach messages",
+        "10,000 cold outreach messages",
         "Multi-platform engagement",
         "Weekly performance reports",
-        "Enhanced Content Creation",
+        "AI-Powered Content Creation",
+        "5 Social Media Posts/Week",
       ],
     },
     {
@@ -56,7 +57,7 @@ export default function Pricing() {
         "Multi-platform outreach",
         "Real-time analytics",
         "AI-Driven Engagement",
-        "Premium Content Creation",
+        "Daily Social Media Posts",
       ],
     },
   ];

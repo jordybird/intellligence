@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Users, Brain, Share2, LucideIcon } from 'lucide-react';
+import { Users, Brain, Share2, BadgePlus, LucideIcon } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 interface TabContent {
   title: string;
@@ -30,21 +31,21 @@ const tabs: Tab[] = [
         'Automated personalized messaging at scale',
         'Smart audience segmentation and targeting',
         'AI-driven response optimization',
-        'Real-time engagement analytics'
+        'Real-time engagement analytics',
       ],
       buttonText: 'Try AI Outreach Tools',
       graph: (
         <div className="h-full w-full rounded-lg overflow-hidden">
-          <Image 
-            src="/lead.png"
+          <Image
+            src="/aioutreach.jpg"
             alt="AI Outreach Analytics"
             width={600}
             height={400}
             className="w-full h-full object-cover"
           />
         </div>
-      )
-    }
+      ),
+    },
   },
   {
     id: 'lead-generation',
@@ -56,12 +57,12 @@ const tabs: Tab[] = [
         'Advanced lead scoring and qualification',
         'Multi-channel lead capture',
         'Automated lead nurturing workflows',
-        'ROI tracking and reporting'
+        'ROI tracking and reporting',
       ],
       buttonText: 'Start Generating Leads',
       graph: (
         <div className="h-full w-full rounded-lg overflow-hidden">
-          <Image 
+          <Image
             src="/lead.png"
             alt="Lead Generation Dashboard"
             width={600}
@@ -69,8 +70,34 @@ const tabs: Tab[] = [
             className="w-full h-full object-cover"
           />
         </div>
-      )
-    }
+      ),
+    },
+  },
+  {
+    id: 'content-creation',
+    label: 'Content Creation',
+    icon: BadgePlus,
+    content: {
+      title: 'Create engaging, high-quality videos tailored to your brand effortlessly',
+      features: [
+        'AI Writing Tools — Generate compelling, SEO-optimized content for blogs, emails, and ads',
+        'Customizable Content Templates — Access ready-to-use templates for consistent branding and messaging',
+        'Dynamic Visual Asset Creation — Design unique graphics and animations optimized for multi-platform use',
+        'Real-Time Content Performance Insights — Analyze engagement metrics to refine and improve content strategies',
+      ],
+      buttonText: 'AI Video Creation',
+      graph: (
+        <div className="h-full w-full rounded-lg overflow-hidden">
+          <Image
+            src="/metrics.jpg"
+            alt="Content Creation Metrics"
+            width={600}
+            height={400}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ),
+    },
   },
   {
     id: 'social-media',
@@ -82,12 +109,12 @@ const tabs: Tab[] = [
         'Cross-platform content management',
         'Engagement analytics and insights',
         'Automated posting schedules',
-        'Social listening and monitoring'
+        'Social listening and monitoring',
       ],
       buttonText: 'Explore Social Tools',
       graph: (
         <div className="h-full w-full rounded-lg overflow-hidden">
-          <Image 
+          <Image
             src="/chartsm.png"
             alt="Social Media Analytics Dashboard"
             width={600}
@@ -95,9 +122,9 @@ const tabs: Tab[] = [
             className="w-full h-full object-cover"
           />
         </div>
-      )
-    }
-  }
+      ),
+    },
+  },
 ];
 
 const TabContentComponent: React.FC<{ content: TabContent }> = ({ content }) => (
@@ -109,14 +136,15 @@ const TabContentComponent: React.FC<{ content: TabContent }> = ({ content }) => 
     className="w-full"
   >
     <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      {/* Left side: Title & Features */}
       <div className="flex flex-col space-y-8">
         <h2 className="text-3xl font-bold text-center md:text-left text-white bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
           {content.title}
         </h2>
-        
+
         <ul className="space-y-6">
           {content.features.map((feature, index) => (
-            <motion.li 
+            <motion.li
               key={index}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -128,34 +156,42 @@ const TabContentComponent: React.FC<{ content: TabContent }> = ({ content }) => 
             </motion.li>
           ))}
         </ul>
-        
+
+        {/* Desktop button */}
         <div className="hidden md:flex justify-start">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow"
-          >
-            {content.buttonText}
-          </motion.button>
+          <Link href="/get-started">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-purple-400 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow"
+            >
+              {content.buttonText}
+            </motion.button>
+          </Link>
         </div>
       </div>
 
+      {/* Right side: Graph & Mobile button */}
       <div className="flex flex-col space-y-8">
-        <motion.div 
+        <motion.div
           className="h-80 md:h-96 rounded-2xl overflow-hidden shadow-2xl shadow-purple-500/20"
           whileHover={{ scale: 1.02 }}
           transition={{ duration: 0.2 }}
         >
           {content.graph}
         </motion.div>
+
+        {/* Mobile button */}
         <div className="flex md:hidden justify-center">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-gradient-to-r from-purple-500 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow"
-          >
-            {content.buttonText}
-          </motion.button>
+          <Link href="/get-started">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="bg-gradient-to-r from-purple-400 to-pink-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-shadow"
+            >
+              {content.buttonText}
+            </motion.button>
+          </Link>
         </div>
       </div>
     </div>
@@ -163,12 +199,13 @@ const TabContentComponent: React.FC<{ content: TabContent }> = ({ content }) => 
 );
 
 const TabbedSection: React.FC = () => {
+  // Set AI Outreach as the default (first in the array).
   const [activeTab, setActiveTab] = useState<string>(tabs[0].id);
 
   return (
     <section className="w-full bg-[#0A0A0A] py-24 md:py-32">
-      <div className="max-w-7xl mx-auto px-2">
-        <motion.h1 
+      <div className="max-w-7xl mx-auto px-4">
+        <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-5xl md:text-6xl font-bold text-white text-center mb-16 bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600"
@@ -176,68 +213,88 @@ const TabbedSection: React.FC = () => {
           Solutions We Provide
         </motion.h1>
 
-        <motion.div 
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="rounded-3xl shadow-2xl overflow-hidden backdrop-blur-xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors"
-          style={{
-            boxShadow: '0 25px 50px -12px rgba(150, 68, 227, 0.15)',
-            backdropFilter: 'blur(20px)'
-          }}
-        >
-          <div className="max-w-6xl mx-auto py-12 md:py-16 px-2 md:px-4">
-            <div className="flex justify-center mb-16">
-              <div className="flex gap-12">
-                {tabs.map((tab) => {
-                  const Icon = tab.icon;
-                  const isActive = activeTab === tab.id;
-                  return (
-                    <motion.button
-                      key={tab.id}
-                      onClick={() => setActiveTab(tab.id)}
-                      className="flex flex-col items-center gap-3 relative px-4"
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Icon 
-                        size={28} 
-                        className={`transition-colors duration-300 ${
-                          isActive ? 'text-purple-400' : 'text-gray-400'
-                        }`} 
-                      />
-                      <span 
-                        className={`text-lg whitespace-nowrap transition-colors duration-300 ${
-                          isActive ? 'text-purple-400 font-semibold' : 'text-white/70'
-                        }`}
+        <div className="bg-gradient-to-r from-purple-400 to-pink-600 p-[3px] rounded-3xl shadow-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="rounded-3xl overflow-hidden backdrop-blur-xl bg-[#0A0A0A] w-full h-full"
+            style={{
+              boxShadow: '0 25px 50px -12px rgba(150, 68, 227, 0.15)',
+              backdropFilter: 'blur(20px)',
+            }}
+          >
+            <div className="max-w-6xl mx-auto py-12 md:py-16 px-2 md:px-4">
+              {/* Hide scrollbar via custom style classes */}
+              <div
+                className="flex md:justify-center justify-start mb-16 overflow-x-auto hide-scrollbar"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                <div
+                  className="flex gap-4 md:gap-12"
+                  style={{ WebkitOverflowScrolling: 'touch' }}
+                >
+                  {tabs.map((tab) => {
+                    const Icon = tab.icon;
+                    const isActive = activeTab === tab.id;
+                    return (
+                      <motion.button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className="flex flex-col items-center gap-2 md:gap-3 relative px-2 md:px-4"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                       >
-                        {tab.label}
-                      </span>
-                      <motion.div 
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-600"
-                        initial={false}
-                        animate={{ 
-                          opacity: isActive ? 1 : 0,
-                          scale: isActive ? 1 : 0.9
-                        }}
-                        transition={{ duration: 0.2 }}
-                      />
-                    </motion.button>
-                  );
-                })}
+                        <Icon
+                          size={28}
+                          className={`transition-colors duration-300 ${
+                            isActive ? 'text-purple-400' : 'text-gray-400'
+                          }`}
+                        />
+                        <span
+                          className={`text-base md:text-lg whitespace-nowrap transition-colors duration-300 ${
+                            isActive ? 'text-purple-400 font-semibold' : 'text-white/70'
+                          }`}
+                        >
+                          {tab.label}
+                        </span>
+                        <motion.div
+                          className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-600"
+                          initial={false}
+                          animate={{
+                            opacity: isActive ? 1 : 0,
+                            scale: isActive ? 1 : 0.9,
+                          }}
+                          transition={{ duration: 0.2 }}
+                        />
+                      </motion.button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="relative">
+                <AnimatePresence mode="wait">
+                  <TabContentComponent
+                    key={activeTab}
+                    content={tabs.find((tab) => tab.id === activeTab)!.content}
+                  />
+                </AnimatePresence>
               </div>
             </div>
-
-            <div className="relative">
-              <AnimatePresence mode="wait">
-                <TabContentComponent
-                  key={activeTab}
-                  content={tabs.find(tab => tab.id === activeTab)!.content}
-                />
-              </AnimatePresence>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
       </div>
+
+      {/* Inject style to hide scrollbar for WebKit-based browsers */}
+      <style jsx>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none; /* IE and Edge */
+          scrollbar-width: none; /* Firefox */
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none; /* Safari and Chrome */
+        }
+      `}</style>
     </section>
   );
 };

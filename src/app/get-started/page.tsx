@@ -6,7 +6,7 @@ import PricingPackages from '../../components/PricingPackages';
 import ComparisonTable from '../../components/ComparisonTable';
 import FAQSection from '../../components/FAQSection';
 import ConsultationScheduler from '../../components/ConsultationScheduler';
-import Footer from '../../components/Footer'
+import Footer from '../../components/Footer';
 
 interface SelectedAddOns {
   [key: string]: boolean;
@@ -26,48 +26,52 @@ const GetStarted: React.FC = () => {
   }, []);
 
   const handleAddOnsComplete = (selectedAddOns: string[]): void => {
-    const addOnsObject = selectedAddOns.reduce((acc, curr) => ({
-      ...acc,
-      [curr]: true
-    }), {} as SelectedAddOns);
-    
+    const addOnsObject = selectedAddOns.reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr]: true,
+      }),
+      {} as SelectedAddOns
+    );
+
     console.log(addOnsObject);
   };
 
   return (
     <div>
-    <main className="relative min-h-screen bg-[#0A0A0A] px-6 md:px-8 lg:px-12">
-      <div className="max-w-[1400px] mx-auto">
-        <PricingPackages />
+      {/* Added p-2 (which is 0.5 rem) to the main container */}
+      <main className="relative min-h-screen bg-[#0A0A0A] p-2">
+        {/* Container with responsive padding */}
+        <div className="max-w-[1400px] mx-auto px-1 sm:px-2 md:px-6 lg:px-12">
+          <PricingPackages />
 
-        <div className="max-w-6xl mx-auto my-8">
-          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+          <div className="max-w-6xl mx-auto my-4 md:my-8">
+            <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+          </div>
+
+          <section className="py-8 md:py-16">
+            <ComparisonTable />
+          </section>
+
+          <section className="pb-8 md:pb-16">
+            <FAQSection />
+          </section>
         </div>
 
-        <section className="py-16">
-          <ComparisonTable />
-        </section>
-
-        <section>
-          <FAQSection />
-        </section>
-      </div>
-
-      <AnimatePresence>
-        {showScheduler && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ConsultationScheduler />
-          </motion.div>
-        )}
-      </AnimatePresence>
-      
-    </main>
-    <Footer/>
+        <AnimatePresence>
+          {showScheduler && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ConsultationScheduler />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </main>
+      <Footer />
     </div>
   );
 };

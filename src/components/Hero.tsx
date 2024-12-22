@@ -180,21 +180,7 @@ export default function Hero() {
                 onHoverStart={() => setIsCompaniesHovered(true)}
                 onHoverEnd={() => setIsCompaniesHovered(false)}
               >
-                <Link 
-                  href="/companies" 
-                  className="bg-[#9644e3] text-white px-4 py-2.5 rounded-full flex items-center gap-3 hover:shadow-lg hover:bg-[#8034d1] transition-all"
-                >
-                  <span className="font-medium">+100 Companies</span>
-                  <div className="w-8 h-8 rounded-full border-2 border-white flex items-center justify-center overflow-hidden">
-                    <motion.div
-                      variants={arrowVariants}
-                      initial="initial"
-                      animate={isCompaniesHovered ? "hover" : "initial"}
-                    >
-                      <DiagonalArrow />
-                    </motion.div>
-                  </div>
-                </Link>
+                
               </motion.div>
 
               {/* Background Image */}

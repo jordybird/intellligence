@@ -68,36 +68,24 @@ const FAQSection: React.FC = () => {
   return (
     <section className="py-16 bg-[#0A0A0A]">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-          <div className="w-full md:col-span-2">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-              Frequently Asked Questions
-            </h2>
-            <p className="text-gray-400 mb-8">
-              Find answers to common questions about our services and packages
-            </p>
-            
-            <div className="bg-[#0F0F0F] rounded-2xl border border-gray-800">
-              {FAQ_ITEMS.map((item, index) => (
-                <FAQItem
-                  key={index}
-                  question={item.question}
-                  answer={item.answer}
-                  isOpen={openIndex === index}
-                  onClick={() => handleClick(index)}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div className="hidden md:block md:col-span-1">
-            <div className="aspect-square w-full max-w-xs mx-auto rounded-2xl overflow-hidden border border-gray-800">
-              <img 
-                src="/api/placeholder/600/600"
-                alt="FAQ illustration" 
-                className="w-full h-full object-cover"
+        <div>
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-gray-400 mb-8">
+            Find answers to common questions about our services and packages
+          </p>
+          
+          <div className="bg-[#0F0F0F] rounded-2xl border border-gray-800">
+            {FAQ_ITEMS.map((item, index) => (
+              <FAQItem
+                key={index}
+                question={item.question}
+                answer={item.answer}
+                isOpen={openIndex === index}
+                onClick={() => handleClick(index)}
               />
-            </div>
+            ))}
           </div>
         </div>
       </div>

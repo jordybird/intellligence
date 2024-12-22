@@ -26,7 +26,8 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="min-h-screen">
+    // Added p-2 for 0.5 rem of padding around the main container
+    <main className="min-h-screen p-2">
       <div id="hero">
         <Hero />
       </div>
