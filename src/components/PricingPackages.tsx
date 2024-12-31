@@ -17,11 +17,10 @@ const PRICING_TIERS: PricingTier[] = [
     price: 999,
     description: "Perfect for businesses just starting their digital journey",
     features: [
-      "Basic digital strategy",
-      "Website optimization",
-      "Monthly reporting",
-      "Email support",
-      "Basic analytics"
+      "5,000 cold outreach messages",
+      "AI-Powered Content Creation",
+      "Google Page Optimization",
+      "3 Social Media Posts/Week"
     ],
     stripeLink: "https://buy.stripe.com/7sIcPy7btaemgSIeUX"
   },
@@ -30,12 +29,11 @@ const PRICING_TIERS: PricingTier[] = [
     price: 1499,
     description: "Ideal for growing businesses ready to scale",
     features: [
-      "Advanced digital strategy",
-      "Priority optimization",
-      "Weekly reporting",
-      "Priority support",
-      "Advanced analytics",
-      "Competitor analysis"
+      "10,000 cold outreach messages",
+      "Multi-platform engagement",
+      "Weekly performance reports",
+      "AI-Powered Content Creation",
+      "5 Social Media Posts/Week"
     ],
     stripeLink: "https://buy.stripe.com/eVa5n653l72a6e43cd"
   },
@@ -44,13 +42,11 @@ const PRICING_TIERS: PricingTier[] = [
     price: 2499,
     description: "Comprehensive solution for large-scale operations",
     features: [
-      "Custom digital strategy",
-      "Dedicated optimization team",
-      "Real-time reporting",
-      "24/7 support",
-      "Enterprise analytics",
-      "Market analysis",
-      "Custom integrations"
+      "15,000 cold outreach messages",
+      "Multi-platform outreach",
+      "Real-time analytics",
+      "AI-Driven Engagement",
+      "Daily Social Media Posts"
     ],
     stripeLink: "https://buy.stripe.com/5kAeXG2Vd3PY9qgcMO"
   }
